@@ -208,8 +208,10 @@ _attribute_ram_code_ void epd_display_tiff(uint8_t *pData, int iSize)
 }
 
 extern uint8_t mac_public[6];
-_attribute_ram_code_ void epd_display(uint32_t time_is, uint16_t battery_mv, int16_t temperature, uint8_t full_or_partial)
+_attribute_ram_code_ void epd_display(uint32_t time_is, uint16_t battery_mv, int16_t temperature, uint16_t pv_val ,uint8_t full_or_partial)
 {
+    uint16_t pvtest;
+    pvtest = 1298;
     if (epd_update_state)
         return;
     obdCreateVirtualDisplay(&obd, 250, 122, epd_temp);
@@ -224,6 +226,8 @@ _attribute_ram_code_ void epd_display(uint32_t time_is, uint16_t battery_mv, int
     obdWriteStringCustom(&obd, (GFXfont *)&DSEG14_Classic_Mini_Regular_40, 50, 65, (char *)buff, 1);
     sprintf(buff, "%d'C", EPD_read_temp());
     obdWriteStringCustom(&obd, (GFXfont *)&Special_Elite_Regular_30, 10, 95, (char *)buff, 1);
+    sprintf(buff, "PV %dW", pv_val);
+    obdWriteStringCustom(&obd, (GFXfont *)&Special_Elite_Regular_30, 80, 100, (char *)buff, 1);
     sprintf(buff, "Battery %dmV", battery_mv);
     obdWriteStringCustom(&obd, (GFXfont *)&Dialog_plain_16, 10, 120, (char *)buff, 1);
     FixBuffer(epd_temp, epd_buffer);

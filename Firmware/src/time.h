@@ -18,4 +18,6 @@ void init_time(void);
 void handler_time(void);
 uint8_t time_reached_period(timer_channel ch, uint32_t seconds);
 void set_time(uint32_t time_now);
+void set_PV(uint16_t pvvalue);
 uint32_t get_time(void);
+uint16_t get_pv(void);
