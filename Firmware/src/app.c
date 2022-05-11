@@ -63,18 +63,20 @@ _attribute_ram_code_ void main_loop(void)
     
 
     uint8_t current_minute = (get_time() / 60) % 60;
-    if (current_minute != minute_refresh)
+    uint16_t current_pv = get_pv();
+    if (current_minute != minute_refresh || current_pv != pv_refresh)
     {
         minute_refresh = current_minute;
+        pv_refresh = current_pv;
         uint8_t current_hour = ((get_time() / 60) / 60) % 24;
         if (current_hour != hour_refresh)
         {
             hour_refresh = current_hour;
-            epd_display(get_time(), battery_mv, temperature, get_pv, 1);
+            epd_display(get_time(), battery_mv, temperature, get_pv(), 1);
         }
         else
         {
-            epd_display(get_time(), battery_mv, temperature, get_pv, 0);
+            epd_display(get_time(), battery_mv, temperature, get_pv(), 0);
         }
     }
 

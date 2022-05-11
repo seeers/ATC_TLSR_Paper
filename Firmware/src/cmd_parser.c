@@ -49,7 +49,7 @@ void cmd_parser(void * p){
 	}else if(inData == 0xFE){
 		settings.advertising_interval = req->dat[1];//Set advertising interval with second byte, value*10second / 0=main_delay
 	}else if(inData == 0xFB){
-		uint16_t new_pv = (req->dat[1] << 8) + (req->dat[2] & 0xff);
+		uint16_t new_pv = (req->dat[2] << 8) + (req->dat[1] & 0xff);
 		set_PV(new_pv);
 	}else if(inData == 0xFA){
 		settings.temp_offset = req->dat[1];//Set temp offset, -12,5 - +12,5 °C
